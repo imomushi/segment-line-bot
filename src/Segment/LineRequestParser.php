@@ -30,7 +30,12 @@ class LineRequestParser
 
     public function execute($arguments)
     {
-        $body = json_decode($arguments->body);
+        $body = new \stdClass();
+        $body -> result =  [new \stdClass()];
+        $body -> result[0] -> content = [];
+        if (is_object($arguments) && property_exists($arguments, 'body')) {
+            $body = json_decode($arguments->body);
+        }
         return ['content' => $body->result[0]->content];
     }
 }
