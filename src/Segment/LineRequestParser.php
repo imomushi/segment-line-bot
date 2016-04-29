@@ -30,5 +30,7 @@ class LineRequestParser
 
     public function execute($arguments)
     {
+        $body = json_decode($arguments->body);
+        return ['content' => $body->result[0]->content];
     }
 }
