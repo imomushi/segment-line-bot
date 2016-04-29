@@ -14,7 +14,6 @@ composer require imomushi/segment-line-bot:dev-master
 ## Basic Usage ##
 
 ```php
-
 ```
 
 ## License ##
