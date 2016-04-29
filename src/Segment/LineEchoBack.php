@@ -30,7 +30,7 @@ class LineEchoBack
 
     public function execute($arguments)
     {
-        $content = (array)$argsuments->content;
+        $content = (array)$arguments->content;
 
         $resContent = $content;
         $resContent['text'] = $content['text'];
