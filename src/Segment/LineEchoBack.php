@@ -55,7 +55,7 @@ class LineEchoBack
                 'content' => $resContent,
             ]),
         );
-        curl_setopt_array($curl, $options); 
+        curl_setopt_array($curl, $options);
 
         // Call API
         try {
