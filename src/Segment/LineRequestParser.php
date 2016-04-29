@@ -34,7 +34,15 @@ class LineRequestParser
         $body -> result =  [new \stdClass()];
         $body -> result[0] -> content = [];
         if (is_object($arguments) && property_exists($arguments, 'body')) {
-            $body = json_decode($arguments->body);
+            $bodyCandidate = json_decode($arguments->body);
+            if (is_object($body) &&
+                property_exists($body, 'result') &&
+                is_array($body -> result) &&
+                is_object($body -> result[0]) &&
+                property_exists($body -> result[0], 'content')
+            ) {
+                $body = $bodyCandidate;
+            }
         }
         return ['content' => $body->result[0]->content];
     }
