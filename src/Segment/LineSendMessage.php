@@ -10,16 +10,21 @@
 
 namespace Imomushi\Worker\Segment;
 
+use LINE\LINEBot;
+use LINE\LINEBot\HTTPClient\GuzzleHTTPClient;
+
 /**
- * Class LineEchoBack
+ * Class LineSendMessage
  *
  * @package Imomushi\Worker
  */
-class LineEchoBack
+class LineSendMessage
 {
     /**
      * @var
      */
+    public $emitter = null;
+    public $currentResponse;
 
     /**
      * Constructer
@@ -35,10 +40,15 @@ class LineEchoBack
             'channelSecret' => $arguments->line_channel_secret,
             'channelMid' => $arguments->line_channel_mid
         ];
+        if (!is_null($this -> emitter)) {
+            $config = array_merge($config, [
+                'emitter' => $this -> emitter
+                ]);
+        }
         $bot = new LINEBot($config, new GuzzleHTTPClient($config));
         $content = (array)$arguments->content;
-        $res = $bot->sendText([$content['from']], $content['text']);
-        if ($res instanceof \LINE\LINEBot\Response\SucceededResponse) {
+        $this -> currentResponse = $bot->sendText([$content['from']], $content['text']);
+        if ($this -> currentResponse instanceof \LINE\LINEBot\Response\SucceededResponse) {
             return ['status' => true];
         }
         return ['status' => false];
